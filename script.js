@@ -7,13 +7,11 @@ const finalMessage   = document.querySelector('#final-message')
 const playAgainBtn   = document.querySelector('#play-button')
 const notification   = document.querySelector('#notification-container')
 
-// const wordsArr = ['application', 'programming', 'interface', 'wizard', 'perseverance']
-
-// let selectedWord = wordsArr[Math.floor(Math.random() * wordsArr.length)]
-
 let wrongLettersArr = []
 const correctLettersArr = ['a', 'i', 'e']
 let unknownWord
+
+// Display or update the unknown word.
 
 function showWord() {
     wordEl.innerHTML = `
@@ -23,13 +21,16 @@ function showWord() {
         .join("")}
         `
         
+        // Check if unknown word was guessed. If yes, display winning message and restart button.      
         const innerWord = wordEl.innerText.replace(/\n/g, '')
-        
+
         if (innerWord === unknownWord) {
             endgamePopup.style.display = 'flex'
             finalMessage.innerText = 'Congradulations! You won!'
         }
 }
+
+// Get new unknown word from api and call function showWord.
     
 async function getWord() {
     
@@ -46,28 +47,35 @@ async function getWord() {
     showWord()
 }
 
-function updateWrongLetters() {
+// Show wrong letters array in DOM.
+
+function showWrongLetters() {
     wrongLettersEl.innerHTML = `
     ${wrongLettersArr.length >= 1 ? "Wrong Letters" : ""}
     <span>${wrongLettersArr}</span>
     `
-
 }
+
+// Remove endgame popup, reset and restart game.
     
 function restartGame() {
     endgamePopup.style.display = 'none'
     wrongLettersArr =[]
-    updateWrongLetters()
+    showWrongLetters()
     console.log("restart")
     getWord()
 }
 
+// Process correct guess.
+
 function correctGuess () {
+    // Notify in case of correct guess already used.
     if (correctLettersArr.includes(e.key)) {
         notification.classList.add("show")
         setTimeout(() => {
             notification.classList.remove("show");
         }, 1500);
+    // Update correctLettersArr and call function showWord.
     } else {
         correctLettersArr.push(e.key)
         showWord()
@@ -75,10 +83,14 @@ function correctGuess () {
 
 }
 
+// Process incorrect guess.
+
 function incorrectGuess () {
+    // Update wrong letters array with wrong guess and call function showWrongLetters.
     if (!wrongLettersArr.includes(e.key)) {
         wrongLettersArr.push(e.key)
-        updateWrongLetters()
+        showWrongLetters()
+    // Notify in case of wrong guess already used.
     } else {
         notification.classList.add("show")
         setTimeout(() => {
@@ -86,6 +98,8 @@ function incorrectGuess () {
         }, 1500);
     }
 }
+
+// Listen for guess entries, filter character entries and process accordingly.
 
 window.addEventListener('keydown', e => {   
     if (e.code.includes("Key")) {
@@ -100,4 +114,3 @@ window.addEventListener('keydown', e => {
 playAgainBtn.addEventListener('click', restartGame)
   
 getWord()
-
