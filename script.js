@@ -62,28 +62,37 @@ function restartGame() {
     getWord()
 }
 
+function correctGuess () {
+    if (correctLettersArr.includes(e.key)) {
+        notification.classList.add("show")
+        setTimeout(() => {
+            notification.classList.remove("show");
+        }, 1500);
+    } else {
+        correctLettersArr.push(e.key)
+        showWord()
+    }
+
+}
+
+function incorrectGuess () {
+    if (!wrongLettersArr.includes(e.key)) {
+        wrongLettersArr.push(e.key)
+        updateWrongLetters()
+    } else {
+        notification.classList.add("show")
+        setTimeout(() => {
+            notification.classList.remove("show");
+        }, 1500);
+    }
+}
+
 window.addEventListener('keydown', e => {   
     if (e.code.includes("Key")) {
         if (unknownWord.includes(e.key)) {
-            if (correctLettersArr.includes(e.key)) {
-                notification.classList.add("show")
-                setTimeout(() => {
-                    notification.classList.remove("show");
-                }, 2000);
-            } else {
-                correctLettersArr.push(e.key)
-                showWord()
-            }
+            correctGuess()
         } else {
-            if (!wrongLettersArr.includes(e.key)) {
-                wrongLettersArr.push(e.key)
-                updateWrongLetters()
-            } else {
-                notification.classList.add("show")
-                setTimeout(() => {
-                    notification.classList.remove("show");
-                }, 2000);
-            }
+            incorrectGuess()
         }
     }
 })   
