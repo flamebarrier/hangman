@@ -1,0 +1,139 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: rgb(0, 33, 83);
+    color: #ddd;
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    overflow: hidden;
+}
+
+h1 {
+    /* margin: 20px 0; */
+}
+
+/* ============ Styling of game container and content =============== */
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 300px;
+}
+
+.figure-container {
+    fill: transparent;
+    stroke: #ddd;
+    stroke-width: 2px;
+    stroke-linecap: round;
+    align-self: flex-start;
+}
+
+.figure {
+    display: none;
+}
+
+.wrong-letters-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+#wrong-letters {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#wrong-letters p {
+    margin-bottom: 20px;
+}
+
+#wrong-letters span {
+    font-size: 150%;
+    letter-spacing: 5px;
+    max-width: 100px;
+}
+
+.word {
+    display: flex;
+    font-size: 200%;
+    /* text-transform: uppercase; */
+
+}
+
+.letter {
+    margin-right: 5px;
+    border-bottom: 2px solid black;
+    width: 30px;
+    text-align: center;
+}
+
+/* =================== Styling for popup ================== */
+
+.popup-container {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* display: flex; */
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+
+}
+
+.popup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(0, 59, 148);
+    padding: 30px;
+    border-radius: 5px;
+}
+
+#final-message {
+    margin-bottom: 40px;
+}
+
+#play-button {
+    display: block;
+    width: 120px;
+    border: none;
+    border-radius: 3px;
+    padding: 10px 0;
+    cursor: pointer;
+    background-color: #fff;
+    color: rgb(0, 59, 148);
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#play-button:active {
+    transform: scale(0.98);
+}
+
+.notification-container {
+    background-color: rgb(0, 22, 56);
+    padding: 20px;
+    border-radius: 10px 10px 0 0;
+    position: absolute;
+    top: 100%;
+    transition: transform 0.3s ease;
+}
+
+.notification-container.show {
+    transform: translateY(-100%);
+}
