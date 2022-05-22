@@ -8,7 +8,7 @@ const playAgainBtn   = document.querySelector('#play-button')
 const notification   = document.querySelector('#notification-container')
 
 let wrongLettersArr = []
-const correctLettersArr = ['a', 'i', 'e']
+let correctLettersArr = []
 let unknownWord
 
 // Display or update the unknown word.
@@ -60,15 +60,15 @@ function showWrongLetters() {
     
 function restartGame() {
     endgamePopup.style.display = 'none'
-    wrongLettersArr =[]
+    wrongLettersArr = []
+    correctLettersArr = []
     showWrongLetters()
-    console.log("restart")
     getWord()
 }
 
 // Process correct guess.
 
-function correctGuess () {
+function correctGuess (e) {
     // Notify in case of correct guess already used.
     if (correctLettersArr.includes(e.key)) {
         notification.classList.add("show")
@@ -85,7 +85,7 @@ function correctGuess () {
 
 // Process incorrect guess.
 
-function incorrectGuess () {
+function incorrectGuess (e) {
     // Update wrong letters array with wrong guess and call function showWrongLetters.
     if (!wrongLettersArr.includes(e.key)) {
         wrongLettersArr.push(e.key)
@@ -103,10 +103,11 @@ function incorrectGuess () {
 
 window.addEventListener('keydown', e => {   
     if (e.code.includes("Key")) {
+        console.log(e.key)
         if (unknownWord.includes(e.key)) {
-            correctGuess()
+            correctGuess(e)
         } else {
-            incorrectGuess()
+            incorrectGuess(e)
         }
     }
 })   
