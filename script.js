@@ -9,6 +9,7 @@ const notification   = document.querySelector('#notification-container')
 
 let wrongLettersArr = []
 let correctLettersArr = []
+const manPartsArr = Array.from(manParts)
 let unknownWord
 
 // Display or update the unknown word.
@@ -62,8 +63,16 @@ function restartGame() {
     endgamePopup.style.display = 'none'
     wrongLettersArr = []
     correctLettersArr = []
+    manPartsArr.forEach(part => part.style.display = 'none')
     showWrongLetters()
     getWord()
+}
+
+// Display losing message and restart button.
+
+function endGame() {
+    endgamePopup.style.display = 'flex'
+    finalMessage.innerText = 'Condolences! You Lost!'
 }
 
 // Process correct guess.
@@ -89,6 +98,14 @@ function incorrectGuess (e) {
     // Update wrong letters array with wrong guess and call function showWrongLetters.
     if (!wrongLettersArr.includes(e.key)) {
         wrongLettersArr.push(e.key)
+
+        
+        for (const part of manPartsArr) {
+            if (!(part.style.display === 'block')) {
+                part.style.display = "block"
+                break
+            }
+        }
         showWrongLetters()
     // Notify in case of wrong guess already used.
     } else {
@@ -103,11 +120,10 @@ function incorrectGuess (e) {
 
 window.addEventListener('keydown', e => {   
     if (e.code.includes("Key")) {
-        console.log(e.key)
         if (unknownWord.includes(e.key)) {
             correctGuess(e)
         } else {
-            incorrectGuess(e)
+            wrongLettersArr.length < 6 ? incorrectGuess(e) : endGame()
         }
     }
 })   
